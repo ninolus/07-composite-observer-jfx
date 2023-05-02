@@ -3,6 +3,7 @@ package ohm.softa.a07.model;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -52,6 +53,11 @@ public class Meal {
 		this.notes = notes;
 	}
 
+	public boolean isVegetarian() {
+		return category.equalsIgnoreCase("vegetarisch");
+	}
+
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -81,12 +87,12 @@ public class Meal {
 	@Override
 	public String toString() {
 		StringBuilder notesBuilder = new StringBuilder();
-		for(String s : notes){
+		for (String s : notes) {
 			notesBuilder.append(String.format("%s, ", s));
 		}
-		if(notesBuilder.length() > 0) {
+		if (notesBuilder.length() > 0) {
 			notesBuilder.setLength(notesBuilder.length() - 2);
-		}else {
+		} else {
 			notesBuilder.append("No notes");
 		}
 		return String.format("%s\n%s\n%s", name, category, notesBuilder.toString());

@@ -7,7 +7,10 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -22,7 +25,7 @@ class OpenMensaAPITests {
 	private static final Logger logger = LogManager.getLogger(OpenMensaAPITests.class);
 	private OpenMensaAPI openMensaAPI;
 
-	@BeforeAll
+	@BeforeEach
 	void setup() {
 
 		// use this to intercept all requests and output them to the logging facilities
@@ -44,17 +47,18 @@ class OpenMensaAPITests {
 
 	@Test
 	void testGetMeals() throws IOException {
-		// TODO prepare call
+		// prepare call
+		Call<List<Meal>> mealCall = openMensaAPI.getMeals("2023-05-02");
 
-		// TODO execute the call synchronously
-
-		// TODO unwrap the body
-		List<Meal> meals = null;
+		// execute the call synchronously
+		Response<List<Meal>> response = mealCall.execute();
+		// unwrap the body
+		List<Meal> meals = response.body();
 
 		assertNotNull(meals);
 		assertNotEquals(0, meals.size());
 
-		for(Meal m : meals){
+		for (Meal m : meals) {
 			logger.info(m.toString());
 		}
 	}
